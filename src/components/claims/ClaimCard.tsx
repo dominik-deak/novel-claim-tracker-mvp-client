@@ -1,6 +1,8 @@
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { claimsApi } from "../../services/api";
 import type { ClaimStatus, ClaimWithProjects } from "../../types";
+import { getErrorMessage } from "../../utils/errorHandler";
 import ProjectSelector from "../projects/ProjectSelector";
 import StatusBadge from "./StatusBadge";
 
@@ -33,11 +35,11 @@ export default function ClaimCard({ claim, onUpdate }: ClaimCardProps) {
 		try {
 			setUpdating(true);
 			await claimsApi.update(claim.claimId, { status: newStatus });
+			toast.success(`Status updated to ${newStatus}`);
 			onUpdate();
 		} catch (err: unknown) {
-			const message =
-				err instanceof Error ? err.message : "Failed to update status";
-			alert(`Error: ${message}`);
+			const message = getErrorMessage(err);
+			toast.error(message);
 		} finally {
 			setUpdating(false);
 		}
@@ -51,13 +53,13 @@ export default function ClaimCard({ claim, onUpdate }: ClaimCardProps) {
 			await claimsApi.linkProjects(claim.claimId, {
 				projectIds: selectedProjectIds,
 			});
+			toast.success("Projects linked successfully");
 			setSelectedProjectIds([]);
 			setManagingProjects(false);
 			onUpdate();
 		} catch (err: unknown) {
-			const message =
-				err instanceof Error ? err.message : "Failed to link projects";
-			alert(`Error: ${message}`);
+			const message = getErrorMessage(err);
+			toast.error(message);
 		} finally {
 			setLinkingProjects(false);
 		}
@@ -67,11 +69,11 @@ export default function ClaimCard({ claim, onUpdate }: ClaimCardProps) {
 		try {
 			setUpdating(true);
 			await claimsApi.unlinkProject(claim.claimId, projectId);
+			toast.success("Project unlinked successfully");
 			onUpdate();
 		} catch (err: unknown) {
-			const message =
-				err instanceof Error ? err.message : "Failed to unlink project";
-			alert(`Error: ${message}`);
+			const message = getErrorMessage(err);
+			toast.error(message);
 		} finally {
 			setUpdating(false);
 		}

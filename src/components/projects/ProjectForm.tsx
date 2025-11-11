@@ -1,6 +1,9 @@
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { projectsApi } from "../../services/api";
 import type { CreateProjectInput } from "../../types";
+import { getErrorMessage } from "../../utils/errorHandler";
+import { CreateProjectFormSchema } from "../../utils/validation";
 
 interface ProjectFormProps {
 	onSuccess: () => void;
@@ -18,16 +21,16 @@ export default function ProjectForm({ onSuccess }: ProjectFormProps) {
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 
-		const newErrors: Record<string, string> = {};
-		if (!formData.name.trim()) {
-			newErrors.name = "Project name is required";
-		}
-		if (!formData.description.trim()) {
-			newErrors.description = "Description is required";
-		}
+		const result = CreateProjectFormSchema.safeParse(formData);
 
-		if (Object.keys(newErrors).length > 0) {
+		if (!result.success) {
+			const newErrors: Record<string, string> = {};
+			for (const issue of result.error.issues) {
+				const path = issue.path.join(".");
+				newErrors[path] = issue.message;
+			}
 			setErrors(newErrors);
+			toast.error("Please fix the validation errors");
 			return;
 		}
 
@@ -35,11 +38,11 @@ export default function ProjectForm({ onSuccess }: ProjectFormProps) {
 			setSubmitting(true);
 			setErrors({});
 			await projectsApi.create(formData);
+			toast.success("Project created successfully");
 			onSuccess();
 		} catch (err: unknown) {
-			const message =
-				err instanceof Error ? err.message : "Failed to create project";
-			setErrors({ submit: message });
+			const message = getErrorMessage(err);
+			toast.error(message);
 		} finally {
 			setSubmitting(false);
 		}
@@ -96,8 +99,6 @@ export default function ProjectForm({ onSuccess }: ProjectFormProps) {
 			>
 				{submitting ? "Creating..." : "Create Project"}
 			</button>
-
-			{errors.submit && <p className="text-red-500 mt-2">{errors.submit}</p>}
 		</form>
 	);
 }

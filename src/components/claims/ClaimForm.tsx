@@ -1,6 +1,9 @@
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { claimsApi } from "../../services/api";
 import type { CreateClaimInput } from "../../types";
+import { getErrorMessage } from "../../utils/errorHandler";
+import { CreateClaimFormSchema } from "../../utils/validation";
 import ProjectSelector from "../projects/ProjectSelector";
 
 interface ClaimFormProps {
@@ -24,30 +27,22 @@ export default function ClaimForm({ onSuccess }: ClaimFormProps) {
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 
-		const newErrors: Record<string, string> = {};
-		if (!formData.companyName.trim()) {
-			newErrors.companyName = "Company name is required";
-		}
-		if (!formData.claimPeriod.startDate) {
-			newErrors.startDate = "Start date is required";
-		}
-		if (!formData.claimPeriod.endDate) {
-			newErrors.endDate = "End date is required";
-		}
-		if (formData.amount <= 0) {
-			newErrors.amount = "Amount must be greater than zero";
-		}
+		const result = CreateClaimFormSchema.safeParse(formData);
 
-		if (
-			formData.claimPeriod.startDate &&
-			formData.claimPeriod.endDate &&
-			formData.claimPeriod.startDate > formData.claimPeriod.endDate
-		) {
-			newErrors.endDate = "End date must be after start date";
-		}
-
-		if (Object.keys(newErrors).length > 0) {
+		if (!result.success) {
+			const newErrors: Record<string, string> = {};
+			for (const issue of result.error.issues) {
+				const path = issue.path.join(".");
+				if (path === "claimPeriod.startDate") {
+					newErrors.startDate = issue.message;
+				} else if (path === "claimPeriod.endDate") {
+					newErrors.endDate = issue.message;
+				} else {
+					newErrors[path] = issue.message;
+				}
+			}
 			setErrors(newErrors);
+			toast.error("Please fix the validation errors");
 			return;
 		}
 
@@ -55,11 +50,11 @@ export default function ClaimForm({ onSuccess }: ClaimFormProps) {
 			setSubmitting(true);
 			setErrors({});
 			await claimsApi.create(formData);
+			toast.success("Claim created successfully");
 			onSuccess();
 		} catch (err: unknown) {
-			const message =
-				err instanceof Error ? err.message : "Failed to create claim";
-			setErrors({ submit: message });
+			const message = getErrorMessage(err);
+			toast.error(message);
 		} finally {
 			setSubmitting(false);
 		}
@@ -180,8 +175,6 @@ export default function ClaimForm({ onSuccess }: ClaimFormProps) {
 			>
 				{submitting ? "Creating..." : "Create Claim"}
 			</button>
-
-			{errors.submit && <p className="text-red-500 mt-2">{errors.submit}</p>}
 		</form>
 	);
 }
