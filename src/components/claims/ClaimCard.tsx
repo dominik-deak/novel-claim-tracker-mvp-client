@@ -1,5 +1,6 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { useAuth } from "../../hooks/useAuth";
 import { claimsApi } from "../../services/api";
 import type { ClaimStatus, ClaimWithProjects } from "../../types";
 import { getErrorMessage } from "../../utils/errorHandler";
@@ -12,6 +13,7 @@ interface ClaimCardProps {
 }
 
 export default function ClaimCard({ claim, onUpdate }: ClaimCardProps) {
+	const { isSubmitter, isReviewer } = useAuth();
 	const [updating, setUpdating] = useState(false);
 	const [managingProjects, setManagingProjects] = useState(false);
 	const [selectedProjectIds, setSelectedProjectIds] = useState<string[]>([]);
@@ -175,22 +177,26 @@ export default function ClaimCard({ claim, onUpdate }: ClaimCardProps) {
 				>
 					Draft
 				</button>
-				<button
-					type="button"
-					onClick={() => handleStatusChange("Submitted")}
-					disabled={updating || claim.status === "Submitted"}
-					className="px-3 py-1 text-sm bg-blue-200 text-blue-800 rounded hover:bg-blue-300 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-				>
-					Submitted
-				</button>
-				<button
-					type="button"
-					onClick={() => handleStatusChange("Approved")}
-					disabled={updating || claim.status === "Approved"}
-					className="px-3 py-1 text-sm bg-green-200 text-green-800 rounded hover:bg-green-300 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-				>
-					Approved
-				</button>
+				{isSubmitter && claim.status === "Draft" && (
+					<button
+						type="button"
+						onClick={() => handleStatusChange("Submitted")}
+						disabled={updating}
+						className="px-3 py-1 text-sm bg-blue-200 text-blue-800 rounded hover:bg-blue-300 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+					>
+						Submit
+					</button>
+				)}
+				{isReviewer && claim.status === "Submitted" && (
+					<button
+						type="button"
+						onClick={() => handleStatusChange("Approved")}
+						disabled={updating}
+						className="px-3 py-1 text-sm bg-green-200 text-green-800 rounded hover:bg-green-300 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+					>
+						Approve
+					</button>
+				)}
 			</div>
 
 			<div className="mt-4 text-xs text-gray-500">

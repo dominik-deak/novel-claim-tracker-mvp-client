@@ -20,6 +20,19 @@ const api = axios.create({
 	},
 });
 
+api.interceptors.request.use((config) => {
+	const userJson = localStorage.getItem("currentUser");
+	if (userJson) {
+		try {
+			const user = JSON.parse(userJson);
+			config.headers["X-User-Id"] = user.userId;
+		} catch (error) {
+			console.error("Failed to parse currentUser from localStorage:", error);
+		}
+	}
+	return config;
+});
+
 export const claimsApi = {
 	create: async (data: CreateClaimInput): Promise<Claim> => {
 		const response = await api.post("/claims", data);
