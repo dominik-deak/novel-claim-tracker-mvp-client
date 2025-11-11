@@ -4,7 +4,7 @@ import { Toaster } from "react-hot-toast";
 import "./index.css";
 import App from "./App.tsx";
 
-createRoot(document.getElementById("root")!).render(
+createRoot(document.getElementById("root") as HTMLElement).render(
 	<StrictMode>
 		<App />
 		<Toaster position="top-right" />
