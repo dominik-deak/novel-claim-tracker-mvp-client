@@ -110,7 +110,7 @@ export default function ClaimForm({ onSuccess }: ClaimFormProps) {
 								},
 							})
 						}
-						className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+						className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
 					/>
 					{errors.startDate && (
 						<p className="text-red-500 text-sm mt-1">{errors.startDate}</p>
@@ -134,7 +134,7 @@ export default function ClaimForm({ onSuccess }: ClaimFormProps) {
 								},
 							})
 						}
-						className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+						className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
 					/>
 					{errors.endDate && (
 						<p className="text-red-500 text-sm mt-1">{errors.endDate}</p>
@@ -176,7 +176,7 @@ export default function ClaimForm({ onSuccess }: ClaimFormProps) {
 			<button
 				type="submit"
 				disabled={submitting}
-				className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+				className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
 			>
 				{submitting ? "Creating..." : "Create Claim"}
 			</button>
