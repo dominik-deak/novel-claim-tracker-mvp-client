@@ -3,13 +3,19 @@ import { useProjects } from "../../hooks/useProjects";
 interface ProjectSelectorProps {
 	selectedIds: string[];
 	onChange: (ids: string[]) => void;
+	excludeIds?: string[];
 }
 
 export default function ProjectSelector({
 	selectedIds,
 	onChange,
+	excludeIds = [],
 }: ProjectSelectorProps) {
 	const { projects, loading, error } = useProjects();
+
+	const availableProjects = projects.filter(
+		(project) => !excludeIds.includes(project.projectId),
+	);
 
 	const handleToggle = (projectId: string) => {
 		if (selectedIds.includes(projectId)) {
@@ -36,6 +42,14 @@ export default function ProjectSelector({
 		);
 	}
 
+	if (availableProjects.length === 0) {
+		return (
+			<div className="text-sm text-gray-500">
+				All projects are already linked to this claim.
+			</div>
+		);
+	}
+
 	return (
 		<div>
 			<label
@@ -48,7 +62,7 @@ export default function ProjectSelector({
 				id="project-selector"
 				className="space-y-2 max-h-60 overflow-y-auto border border-gray-300 rounded-md p-3"
 			>
-				{projects.map((project) => (
+				{availableProjects.map((project) => (
 					<label
 						key={project.projectId}
 						className="flex items-start space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded"
@@ -57,7 +71,7 @@ export default function ProjectSelector({
 							type="checkbox"
 							checked={selectedIds.includes(project.projectId)}
 							onChange={() => handleToggle(project.projectId)}
-							className="mt-1"
+							className="mt-1 cursor-pointer"
 						/>
 						<div className="flex-1">
 							<div className="font-medium">{project.name}</div>
