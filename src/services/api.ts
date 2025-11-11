@@ -45,10 +45,7 @@ export const claimsApi = {
 		await api.delete(`/claims/${id}`);
 	},
 
-	linkProjects: async (
-		id: string,
-		data: LinkProjectsInput,
-	): Promise<void> => {
+	linkProjects: async (id: string, data: LinkProjectsInput): Promise<void> => {
 		await api.post(`/claims/${id}/projects`, data);
 	},
 
