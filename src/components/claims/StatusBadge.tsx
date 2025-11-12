@@ -9,7 +9,7 @@ export default function StatusBadge({ status }: StatusBadgeProps) {
 		Draft: "bg-gray-200 text-gray-800",
 		Submitted: "bg-blue-200 text-blue-800",
 		Approved: "bg-green-200 text-green-800",
-	};
+	} as const;
 
 	return (
 		<span
