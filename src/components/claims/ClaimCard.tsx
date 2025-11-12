@@ -60,14 +60,6 @@ export default function ClaimCard({ claim, onUpdate }: ClaimCardProps) {
 
 			<div className="flex items-center space-x-2">
 				<span className="text-sm text-gray-600">Update status:</span>
-				<button
-					type="button"
-					onClick={() => handleStatusChange("Draft")}
-					disabled={updating || claim.status === "Draft"}
-					className="px-3 py-1 text-sm bg-gray-200 text-gray-800 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-				>
-					Draft
-				</button>
 				{isSubmitter && claim.status === "Draft" && (
 					<button
 						type="button"
@@ -79,15 +71,40 @@ export default function ClaimCard({ claim, onUpdate }: ClaimCardProps) {
 					</button>
 				)}
 				{isReviewer && claim.status === "Submitted" && (
+					<>
+						<button
+							type="button"
+							onClick={() => handleStatusChange("Approved")}
+							disabled={updating}
+							className="px-3 py-1 text-sm bg-green-200 text-green-800 rounded hover:bg-green-300 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+						>
+							Approve
+						</button>
+						<button
+							type="button"
+							onClick={() => handleStatusChange("Draft")}
+							disabled={updating}
+							className="px-3 py-1 text-sm bg-gray-200 text-gray-800 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+						>
+							Send to Draft
+						</button>
+					</>
+				)}
+				{isReviewer && claim.status === "Approved" && (
 					<button
 						type="button"
-						onClick={() => handleStatusChange("Approved")}
+						onClick={() => handleStatusChange("Draft")}
 						disabled={updating}
-						className="px-3 py-1 text-sm bg-green-200 text-green-800 rounded hover:bg-green-300 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+						className="px-3 py-1 text-sm bg-gray-200 text-gray-800 rounded hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
 					>
-						Approve
+						Send to Draft
 					</button>
 				)}
+				{!isSubmitter &&
+					!isReviewer &&
+					claim.status === "Draft" &&
+					"No actions available"}
+				{isSubmitter && claim.status !== "Draft" && "No actions available"}
 			</div>
 
 			<div className="mt-4 text-xs text-gray-500">

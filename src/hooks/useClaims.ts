@@ -26,9 +26,9 @@ export function useClaims(statusFilter?: string) {
 		loadClaims();
 	}, [loadClaims]);
 
-	const refresh = () => {
+	const refresh = useCallback(() => {
 		loadClaims();
-	};
+	}, [loadClaims]);
 
 	return { claims, loading, error, refresh };
 }
