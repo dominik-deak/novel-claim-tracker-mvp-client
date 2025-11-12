@@ -4,6 +4,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { claimsApi } from "../../services/api";
 import type { ClaimStatus, ClaimWithProjects } from "../../types";
 import { getErrorMessage } from "../../utils/errorHandler";
+import { formatAmount, formatDateRange } from "../../utils/formatting";
 import ProjectSelector from "../projects/ProjectSelector";
 import StatusBadge from "./StatusBadge";
 
@@ -18,20 +19,6 @@ export default function ClaimCard({ claim, onUpdate }: ClaimCardProps) {
 	const [managingProjects, setManagingProjects] = useState(false);
 	const [selectedProjectIds, setSelectedProjectIds] = useState<string[]>([]);
 	const [linkingProjects, setLinkingProjects] = useState(false);
-
-	const formatAmount = (pence: number) => {
-		const pounds = pence / 100;
-		return new Intl.NumberFormat("en-GB", {
-			style: "currency",
-			currency: "GBP",
-		}).format(pounds);
-	};
-
-	const formatDateRange = (startDate: string, endDate: string) => {
-		const start = new Date(startDate).toLocaleDateString("en-GB");
-		const end = new Date(endDate).toLocaleDateString("en-GB");
-		return `${start} - ${end}`;
-	};
 
 	const handleStatusChange = async (newStatus: ClaimStatus) => {
 		try {
