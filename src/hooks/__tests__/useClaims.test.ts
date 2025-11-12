@@ -54,7 +54,12 @@ describe("useClaims", () => {
 
 	describe("Initial Data Loading", () => {
 		it("should set loading to true initially", () => {
-			mockClaimsApi.list.mockImplementation(() => new Promise(() => {}));
+			mockClaimsApi.list.mockImplementation(
+				() =>
+					new Promise(() => {
+						// Promise never resolves - testing loading state
+					}),
+			);
 
 			const { result } = renderHook(() => useClaims());
 

@@ -40,7 +40,12 @@ describe("useProjects", () => {
 
 	describe("Initial Data Loading", () => {
 		it("should set loading to true initially", () => {
-			mockProjectsApi.list.mockImplementation(() => new Promise(() => {}));
+			mockProjectsApi.list.mockImplementation(
+				() =>
+					new Promise(() => {
+						// Promise never resolves - testing loading state
+					}),
+			);
 
 			const { result } = renderHook(() => useProjects());
 

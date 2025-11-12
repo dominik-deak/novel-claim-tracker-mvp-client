@@ -136,9 +136,7 @@ describe("Validation Schemas", () => {
 				if (!result.success) {
 					expect(result.error).toBeDefined();
 					const errorMessages = result.error.issues.map((e) => e.message);
-					expect(errorMessages).toContain(
-						"Start date is required",
-					);
+					expect(errorMessages).toContain("Start date is required");
 				}
 			});
 
@@ -182,11 +180,9 @@ describe("Validation Schemas", () => {
 				if (!result.success) {
 					expect(result.error).toBeDefined();
 					const errorMessages = result.error.issues.map((e) => e.message);
-					expect(errorMessages).toContain(
-						"Start date must be before end date",
-					);
-					const dateError = result.error.issues.find((e) =>
-						e.message === "Start date must be before end date",
+					expect(errorMessages).toContain("Start date must be before end date");
+					const dateError = result.error.issues.find(
+						(e) => e.message === "Start date must be before end date",
 					);
 					expect(dateError?.path).toEqual(["endDate"]);
 				}
@@ -204,9 +200,7 @@ describe("Validation Schemas", () => {
 				if (!result.success) {
 					expect(result.error).toBeDefined();
 					const errorMessages = result.error.issues.map((e) => e.message);
-					expect(errorMessages).toContain(
-						"Start date must be before end date",
-					);
+					expect(errorMessages).toContain("Start date must be before end date");
 				}
 			});
 
@@ -337,9 +331,7 @@ describe("Validation Schemas", () => {
 				if (!result.success) {
 					expect(result.error).toBeDefined();
 					const errorMessages = result.error.issues.map((e) => e.message);
-					expect(errorMessages).toContain(
-						"Company name is required",
-					);
+					expect(errorMessages).toContain("Company name is required");
 				}
 			});
 
@@ -427,9 +419,7 @@ describe("Validation Schemas", () => {
 				if (!result.success) {
 					expect(result.error).toBeDefined();
 					const errorMessages = result.error.issues.map((e) => e.message);
-					expect(errorMessages).toContain(
-						"Amount must be positive",
-					);
+					expect(errorMessages).toContain("Amount must be positive");
 				}
 			});
 
@@ -449,9 +439,7 @@ describe("Validation Schemas", () => {
 				if (!result.success) {
 					expect(result.error).toBeDefined();
 					const errorMessages = result.error.issues.map((e) => e.message);
-					expect(errorMessages).toContain(
-						"Amount must be positive",
-					);
+					expect(errorMessages).toContain("Amount must be positive");
 				}
 			});
 
@@ -471,9 +459,7 @@ describe("Validation Schemas", () => {
 				if (!result.success) {
 					expect(result.error).toBeDefined();
 					const errorMessages = result.error.issues.map((e) => e.message);
-					expect(errorMessages).toContain(
-						"Amount must be an integer (pence)",
-					);
+					expect(errorMessages).toContain("Amount must be an integer (pence)");
 				}
 			});
 
@@ -607,9 +593,7 @@ describe("Validation Schemas", () => {
 				if (!result.success) {
 					expect(result.error).toBeDefined();
 					const errorMessages = result.error.issues.map((e) => e.message);
-					expect(errorMessages).toContain(
-						"Project name is required",
-					);
+					expect(errorMessages).toContain("Project name is required");
 				}
 			});
 
@@ -677,9 +661,7 @@ describe("Validation Schemas", () => {
 				if (!result.success) {
 					expect(result.error).toBeDefined();
 					const errorMessages = result.error.issues.map((e) => e.message);
-					expect(errorMessages).toContain(
-						"Description is required",
-					);
+					expect(errorMessages).toContain("Description is required");
 				}
 			});
 
@@ -726,7 +708,8 @@ describe("Validation Schemas", () => {
 			it("should accept description with special characters", () => {
 				const validProject = {
 					name: "Test Project",
-					description: "Testing with special chars: !@#$%^&*()_+-=[]{}|;:',.<>?",
+					description:
+						"Testing with special chars: !@#$%^&*()_+-=[]{}|;:',.<>?",
 				};
 
 				const result = CreateProjectFormSchema.safeParse(validProject);
