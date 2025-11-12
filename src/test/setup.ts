@@ -1,6 +1,22 @@
 import "@testing-library/jest-dom/vitest";
 import { cleanup } from "@testing-library/react";
-import { afterEach, beforeEach, vi } from "vitest";
+import { afterAll, afterEach, beforeAll, beforeEach, vi } from "vitest";
+
+// Store original console methods
+const originalConsoleError = console.error;
+const originalConsoleWarn = console.warn;
+
+// Suppress console output during tests
+beforeAll(() => {
+	console.error = vi.fn();
+	console.warn = vi.fn();
+});
+
+// Restore console methods after all tests
+afterAll(() => {
+	console.error = originalConsoleError;
+	console.warn = originalConsoleWarn;
+});
 
 afterEach(() => {
 	cleanup();
