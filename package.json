@@ -6,6 +6,9 @@
 	"scripts": {
 		"dev": "vite",
 		"build": "tsc -b && vite build",
+		"test": "vitest",
+		"test:ui": "vitest --ui",
+		"test:coverage": "vitest --coverage",
 		"format:check": "biome format",
 		"format:fix": "biome format --write",
 		"lint:check": "biome lint",
@@ -28,14 +31,20 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.3.4",
+		"@testing-library/jest-dom": "^6.9.1",
+		"@testing-library/react": "^16.3.0",
+		"@testing-library/user-event": "^14.6.1",
 		"@types/node": "^24.10.0",
 		"@types/react": "^19.2.2",
 		"@types/react-dom": "^19.2.2",
 		"@vitejs/plugin-react": "^5.1.0",
+		"@vitest/ui": "^4.0.8",
 		"babel-plugin-react-compiler": "^19.1.0-rc.3",
 		"globals": "^16.5.0",
 		"husky": "^9.1.7",
+		"jsdom": "^27.1.0",
 		"typescript": "~5.9.3",
-		"vite": "^7.2.2"
+		"vite": "^7.2.2",
+		"vitest": "^4.0.8"
 	}
 }
