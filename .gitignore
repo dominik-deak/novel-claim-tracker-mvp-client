@@ -50,3 +50,9 @@ amplifytools.xcconfig
 .secret-*
 **.sample
 #amplify-do-not-edit-end
+
+# More Amplify files
+amplify/team-provider-info.json
+amplify/#current-cloud-backend/
+amplify/mock-data/
+amplify/mock-api-resources/
