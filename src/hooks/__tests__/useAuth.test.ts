@@ -78,7 +78,7 @@ describe("useAuth", () => {
 
 		const stored = localStorage.getItem("currentUser");
 		expect(stored).not.toBeNull();
-		expect(JSON.parse(stored!)).toEqual(MOCK_USERS["user-1"]);
+		expect(JSON.parse(stored as string)).toEqual(MOCK_USERS["user-1"]);
 	});
 
 	it("should clear user and localStorage when set to null", () => {
@@ -156,13 +156,17 @@ describe("useAuth", () => {
 			result.current.setCurrentUser(MOCK_USERS["user-1"]);
 		});
 
-		expect(JSON.parse(localStorage.getItem("currentUser")!).name).toBe("Alice");
+		expect(JSON.parse(localStorage.getItem("currentUser") as string).name).toBe(
+			"Alice",
+		);
 
 		act(() => {
 			result.current.setCurrentUser(MOCK_USERS["user-2"]);
 		});
 
-		expect(JSON.parse(localStorage.getItem("currentUser")!).name).toBe("Bob");
+		expect(JSON.parse(localStorage.getItem("currentUser") as string).name).toBe(
+			"Bob",
+		);
 	});
 
 	it("should maintain user state across multiple consumers", () => {

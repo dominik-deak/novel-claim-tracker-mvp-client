@@ -54,10 +54,7 @@ describe("useClaims", () => {
 
 	describe("Initial Data Loading", () => {
 		it("should set loading to true initially", () => {
-			mockClaimsApi.list.mockImplementation(
-				// biome-ignore lint/suspicious/noEmptyBlockStatements: Promise intentionally never resolves to test loading state
-				() => new Promise(() => {}),
-			);
+			mockClaimsApi.list.mockImplementation(() => new Promise(() => {}));
 
 			const { result } = renderHook(() => useClaims());
 

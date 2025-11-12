@@ -40,10 +40,7 @@ describe("useProjects", () => {
 
 	describe("Initial Data Loading", () => {
 		it("should set loading to true initially", () => {
-			mockProjectsApi.list.mockImplementation(
-				// biome-ignore lint/suspicious/noEmptyBlockStatements: Promise intentionally never resolves to test loading state
-				() => new Promise(() => {}),
-			);
+			mockProjectsApi.list.mockImplementation(() => new Promise(() => {}));
 
 			const { result } = renderHook(() => useProjects());
 
