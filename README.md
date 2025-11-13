@@ -2,6 +2,10 @@
 
 Frontend web application for the Novel Claim Tracker MVP - a React-based interface for managing UK R&D tax relief claims and projects.
 
+## 🌐 Live Deployment
+
+**Amplify App**: https://main.d33a41waf9sd75.amplifyapp.com/
+
 ## 📋 Overview
 
 This is a modern React single-page application (SPA) that provides an intuitive interface for:
