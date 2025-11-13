@@ -87,11 +87,14 @@ frontend/
 ### Prerequisites
 
 - Node.js v24
-- Backend API running (mock server or AWS deployment)
+- Backend API running (see `../backend/README.md` for setup instructions)
 
 ### Installation
 
 ```bash
+# Use Node.js v24 (via nvm)
+nvm use
+
 # Install dependencies
 npm install
 
@@ -139,9 +142,6 @@ Build output will be in the `dist/` directory.
 ```bash
 # Run all tests
 npm test
-
-# Run tests in watch mode
-npm run test:watch
 
 # Run tests with coverage
 npm run test:coverage
@@ -388,6 +388,33 @@ Set the following in your deployment platform:
 ```
 VITE_API_URL=https://<your-api-id>.execute-api.eu-west-2.amazonaws.com/prod
 ```
+
+## 🤖 AI Usage Notes
+
+This project was built with AI assistance (as permitted by Novel's challenge guidelines). Here's how AI was used throughout development:
+
+**Domain Research:**
+- Researched UK SME R&D tax relief domain to understand business requirements
+- Clarified real-world role-based access control patterns (submitter vs. reviewer)
+
+**Technical Research:**
+- Researched deployment strategies for the frontend with AWS Amplify
+
+**Development Acceleration:**
+- Generated boilerplate React components, TypeScript interfaces and Zod schemas
+- Assisted with debugging API integration issues
+
+**Testing & Deployment:**
+- Assisted with AWS Amplify CLI commands and deployment workflows
+- Helped troubleshoot CORS and environment configuration issues once the backend was deployed
+- Generated comprehensive unit tests for React components and hooks
+- Generated comprehensive manual testing checklists
+
+**Documentation:**
+- Generated comprehensive README documentation
+
+**Validation:**
+AI-generated code was reviewed, tested, and validated before inclusion. The component architecture and UX decisions were made independently with AI providing implementation assistance and research.
 
 ## 🗺️ Potential Future Enhancements
 
