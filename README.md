@@ -407,7 +407,6 @@ This project was built with AI assistance (as permitted by Novel's challenge gui
 
 **Testing & Deployment:**
 - Assisted with AWS Amplify CLI commands and deployment workflows
-- Helped troubleshoot CORS and environment configuration issues once the backend was deployed
 - Generated comprehensive unit tests for React components and hooks
 - Generated comprehensive manual testing checklists
 
