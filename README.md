@@ -401,9 +401,6 @@ This project was built with AI assistance (as permitted by Novel's challenge gui
 - Researched UK SME R&D tax relief domain to understand business requirements
 - Clarified real-world role-based access control patterns (submitter vs. reviewer)
 
-**Technical Research:**
-- Researched deployment strategies for the frontend with AWS Amplify
-
 **Development Acceleration:**
 - Generated boilerplate React components, TypeScript interfaces and Zod schemas
 - Assisted with debugging API integration issues
